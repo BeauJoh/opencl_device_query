@@ -1,0 +1,3 @@
+A quick and simple OpenCL query binary. Launch to show the information of all
+OpenCL compatible devices and platforms on the current system.
+
