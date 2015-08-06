@@ -175,7 +175,41 @@ int main(int argc, char** argv)
 					NULL);	        		//param_value_size_ret
 
 			printf("\t\t\tmax clock frequency:\t%d MHz\n",my_clock_frequency);
+			
+			//workgroups
+			//max total workgroup size 
+			size_t my_max_work_group_size;
+			clGetDeviceInfo(my_devices[i],			//device
+					CL_DEVICE_MAX_WORK_GROUP_SIZE, 	//param_name
+					sizeof(size_t),		     	//param_value_size
+					&my_max_work_group_size,  	//param_value
+					NULL);	        		//param_value_size_ret
 
+			printf("\t\t\tmax total work size:\t%d\n",my_max_work_group_size);
+			//no. work dimensions		
+			cl_uint my_max_work_item_dimensions;
+			clGetDeviceInfo(my_devices[i],				//device
+					CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS, 	//param_name
+					sizeof(cl_uint),	     		//param_value_size
+					&my_max_work_item_dimensions,  		//param_value
+					NULL);	        			//param_value_size_ret
+
+			printf("\t\t\tmax work dimensions:\t%d\n",my_max_work_item_dimensions);
+			//CL_DEVICE_MAX_WORK_ITEM_SIZES size_t[]
+			//max total workgroup size 
+			size_t my_max_work_item_sizes[my_max_work_item_dimensions];
+			clGetDeviceInfo(my_devices[i],			//device
+					CL_DEVICE_MAX_WORK_ITEM_SIZES, 	//param_name
+					sizeof(size_t)*
+					my_max_work_item_dimensions,   	//param_value_size
+					&my_max_work_item_sizes,  	//param_value
+					NULL);	        		//param_value_size_ret
+			printf("\t\t\tmax work item sizes:\t");
+			for(size_t k = 0; k < my_max_work_item_dimensions; k++){
+				printf("%d\t",my_max_work_item_sizes[k]);
+			}
+			printf("\n");
+			
 			//memory	
 			//(total global)
 			cl_ulong my_global_mem_size;	
