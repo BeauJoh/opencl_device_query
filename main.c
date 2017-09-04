@@ -122,7 +122,7 @@ int main(int argc, char** argv)
 			//print the vendor
 			char my_device_vendor[total_buffer_length];
 			length_of_buffer_used = 0;
-			clGetDeviceInfo(my_devices[i],      //device
+			clGetDeviceInfo(my_devices[j],      //device
 					CL_DEVICE_VENDOR,       	//param_name
 					total_buffer_length,    	//param_value_size
 					&my_device_vendor,      	//param_value
@@ -133,7 +133,7 @@ int main(int argc, char** argv)
 			//device type
 			//CL_DEVICE_TYPE
 			cl_device_type my_device_type;
-			clGetDeviceInfo(my_devices[i],	//device
+			clGetDeviceInfo(my_devices[j],	//device
 					CL_DEVICE_TYPE, //param_name
 					sizeof(cl_device_type),	        //param_value_size
 					&my_device_type,//param_value
@@ -158,7 +158,7 @@ int main(int argc, char** argv)
 			
 			//no. cores
 			cl_uint my_number_of_cores;
-			clGetDeviceInfo(my_devices[i],			//device
+			clGetDeviceInfo(my_devices[j],			//device
 					CL_DEVICE_MAX_COMPUTE_UNITS, 	//param_name
 					sizeof(cl_uint),	     	//param_value_size
 					&my_number_of_cores,	     	//param_value
@@ -168,7 +168,7 @@ int main(int argc, char** argv)
 
 			//core clock frequency
 			cl_uint my_clock_frequency;
-			clGetDeviceInfo(my_devices[i],			//device
+			clGetDeviceInfo(my_devices[j],			//device
 					CL_DEVICE_MAX_CLOCK_FREQUENCY, 	//param_name
 					sizeof(cl_uint),	     	//param_value_size
 					&my_clock_frequency,	     	//param_value
@@ -179,7 +179,7 @@ int main(int argc, char** argv)
 			//workgroups
 			//max total workgroup size 
 			size_t my_max_work_group_size;
-			clGetDeviceInfo(my_devices[i],			//device
+			clGetDeviceInfo(my_devices[j],			//device
 					CL_DEVICE_MAX_WORK_GROUP_SIZE, 	//param_name
 					sizeof(size_t),		     	//param_value_size
 					&my_max_work_group_size,  	//param_value
@@ -188,7 +188,7 @@ int main(int argc, char** argv)
 			printf("\t\t\tmax total work size:\t%d\n",my_max_work_group_size);
 			//no. work dimensions		
 			cl_uint my_max_work_item_dimensions;
-			clGetDeviceInfo(my_devices[i],				//device
+			clGetDeviceInfo(my_devices[j],				//device
 					CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS, 	//param_name
 					sizeof(cl_uint),	     		//param_value_size
 					&my_max_work_item_dimensions,  		//param_value
@@ -198,7 +198,7 @@ int main(int argc, char** argv)
 			//CL_DEVICE_MAX_WORK_ITEM_SIZES size_t[]
 			//max total workgroup size 
 			size_t my_max_work_item_sizes[my_max_work_item_dimensions];
-			clGetDeviceInfo(my_devices[i],			//device
+			clGetDeviceInfo(my_devices[j],			//device
 					CL_DEVICE_MAX_WORK_ITEM_SIZES, 	//param_name
 					sizeof(size_t)*
 					my_max_work_item_dimensions,   	//param_value_size
@@ -213,7 +213,7 @@ int main(int argc, char** argv)
 			//memory	
 			//(total global)
 			cl_ulong my_global_mem_size;	
-			clGetDeviceInfo(my_devices[i],			//device
+			clGetDeviceInfo(my_devices[j],			//device
 					CL_DEVICE_GLOBAL_MEM_SIZE, 	//param_name
 					sizeof(cl_ulong),	     	//param_value_size
 					&my_global_mem_size,	     	//param_value
@@ -223,7 +223,7 @@ int main(int argc, char** argv)
 			
 			//(global cache size)
 			cl_ulong my_global_cache_size;	
-			clGetDeviceInfo(my_devices[i],			//device
+			clGetDeviceInfo(my_devices[j],			//device
 					CL_DEVICE_GLOBAL_MEM_CACHE_SIZE,//param_name
 					sizeof(cl_ulong),	     	//param_value_size
 					&my_global_cache_size,		//param_value
@@ -233,7 +233,7 @@ int main(int argc, char** argv)
 
 			//(global cache line size)
 			cl_uint my_global_cacheline_size;	
-			clGetDeviceInfo(my_devices[i],				//device
+			clGetDeviceInfo(my_devices[j],				//device
 					CL_DEVICE_GLOBAL_MEM_CACHELINE_SIZE,	//param_name
 					sizeof(cl_uint),	     		//param_value_size
 					&my_global_cacheline_size,		//param_value
@@ -242,7 +242,7 @@ int main(int argc, char** argv)
 			printf("\t\t\tglobal cacheline size:\t%d bytes\n",(my_global_cacheline_size));
 
 			cl_ulong my_local_mem_size;	
-			clGetDeviceInfo(my_devices[i],			//device
+			clGetDeviceInfo(my_devices[j],			//device
 					CL_DEVICE_LOCAL_MEM_SIZE, 	//param_name
 					sizeof(cl_ulong),	     	//param_value_size
 					&my_local_mem_size,	     	//param_value
