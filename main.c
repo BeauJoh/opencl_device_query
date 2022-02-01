@@ -14,7 +14,7 @@
 int main(int argc, char** argv)
 {
 	cl_uint number_of_platforms = 0;
-	clGetPlatformIDs((cl_uint)NULL,        //num_entries
+	clGetPlatformIDs((cl_uint)0,        //num_entries
 			NULL,                 //platforms
 			&number_of_platforms);//num_platforms
 	if(number_of_platforms==0){
@@ -35,7 +35,7 @@ int main(int argc, char** argv)
 	printf("Your system platform id(s) are:\n");
 	//print some details about each platform
 	for(size_t i = 0; i < number_of_platforms; i++){
-		printf("\tplatform no. %d\n",i);
+		printf("\tplatform no. %zu\n",i);
 
 		//print it's name
 		size_t total_buffer_length = 1024;
@@ -71,6 +71,17 @@ int main(int argc, char** argv)
 		printf("\t\tprofile:\t%*.*s\n",(int)length_of_buffer_used,
 				(int)length_of_buffer_used,my_platform_profile);
 
+		//print the version
+		char my_platform_version[total_buffer_length];
+		length_of_buffer_used = 0;
+		clGetPlatformInfo(my_platforms[i],      //platform
+				CL_PLATFORM_VERSION,    	//param_name
+				total_buffer_length,    	//param_value_size
+				&my_platform_profile,   	//param_value
+				&length_of_buffer_used);	//param_value_size_ret
+		printf("\t\tversion:\t%*.*s\n",(int)length_of_buffer_used,
+				(int)length_of_buffer_used,my_platform_profile);
+
 		//print the extensions
 		char my_platform_extensions[total_buffer_length];
 		length_of_buffer_used = 0;
@@ -87,7 +98,7 @@ int main(int argc, char** argv)
 		cl_uint number_of_devices = 0;
 		clGetDeviceIDs(my_platforms[i],    	//platform_id
 				CL_DEVICE_TYPE_ALL, 		//device_type
-				(cl_uint)NULL,      		//num_entries
+				(cl_uint)0,      		//num_entries
 				NULL,               		//devices
 				&number_of_devices);		//num_devices
 		if(number_of_devices==0){
@@ -106,7 +117,7 @@ int main(int argc, char** argv)
 				NULL);              		//num_devices
 		//for each device print some of its details:
 		for(size_t j = 0; j < number_of_devices; j++){
-			printf("\t\tdevice no. %d\n",j);
+			printf("\t\tdevice no. %zu\n",j);
 
 			//print the name
 			char my_device_name[total_buffer_length];
@@ -164,7 +175,7 @@ int main(int argc, char** argv)
 					&my_number_of_cores,	     	//param_value
 					NULL);	        		//param_value_size_ret
 
-			printf("\t\t\tcore count:\t\t%d\n",my_number_of_cores);
+			printf("\t\t\tcore count:\t\t%u\n",my_number_of_cores);
 
 			//core clock frequency
 			cl_uint my_clock_frequency;
@@ -174,7 +185,7 @@ int main(int argc, char** argv)
 					&my_clock_frequency,	     	//param_value
 					NULL);	        		//param_value_size_ret
 
-			printf("\t\t\tmax clock frequency:\t%d MHz\n",my_clock_frequency);
+			printf("\t\t\tmax clock frequency:\t%u MHz\n",my_clock_frequency);
 			
 			//workgroups
 			//max total workgroup size 
@@ -185,7 +196,7 @@ int main(int argc, char** argv)
 					&my_max_work_group_size,  	//param_value
 					NULL);	        		//param_value_size_ret
 
-			printf("\t\t\tmax total work size:\t%d\n",my_max_work_group_size);
+			printf("\t\t\tmax total work size:\t%zu\n",my_max_work_group_size);
 			//no. work dimensions		
 			cl_uint my_max_work_item_dimensions;
 			clGetDeviceInfo(my_devices[j],				//device
@@ -194,7 +205,7 @@ int main(int argc, char** argv)
 					&my_max_work_item_dimensions,  		//param_value
 					NULL);	        			//param_value_size_ret
 
-			printf("\t\t\tmax work dimensions:\t%d\n",my_max_work_item_dimensions);
+			printf("\t\t\tmax work dimensions:\t%u\n",my_max_work_item_dimensions);
 			//CL_DEVICE_MAX_WORK_ITEM_SIZES size_t[]
 			//max total workgroup size 
 			size_t my_max_work_item_sizes[my_max_work_item_dimensions];
@@ -206,7 +217,7 @@ int main(int argc, char** argv)
 					NULL);	        		//param_value_size_ret
 			printf("\t\t\tmax work item sizes:\t");
 			for(size_t k = 0; k < my_max_work_item_dimensions; k++){
-				printf("%d\t",my_max_work_item_sizes[k]);
+				printf("%zu\t",my_max_work_item_sizes[k]);
 			}
 			printf("\n");
 			
@@ -219,7 +230,7 @@ int main(int argc, char** argv)
 					&my_global_mem_size,	     	//param_value
 					NULL);	        		//param_value_size_ret
 
-			printf("\t\t\tglobal memory size:\t%lld MiBs\n",(my_global_mem_size>>20));
+			printf("\t\t\tglobal memory size:\t%lu MiBs\n",(my_global_mem_size>>20));
 			
 			//(global cache size)
 			cl_ulong my_global_cache_size;	
@@ -229,7 +240,7 @@ int main(int argc, char** argv)
 					&my_global_cache_size,		//param_value
 					NULL);	        		//param_value_size_ret
 
-			printf("\t\t\tglobal cache size:\t%lld KiBs\n",(my_global_cache_size>>10));
+			printf("\t\t\tglobal cache size:\t%lu KiBs\n",(my_global_cache_size>>10));
 
 			//(global cache line size)
 			cl_uint my_global_cacheline_size;	
@@ -239,7 +250,7 @@ int main(int argc, char** argv)
 					&my_global_cacheline_size,		//param_value
 					NULL);	        			//param_value_size_ret
 
-			printf("\t\t\tglobal cacheline size:\t%d bytes\n",(my_global_cacheline_size));
+			printf("\t\t\tglobal cacheline size:\t%u bytes\n",(my_global_cacheline_size));
 
 			cl_ulong my_local_mem_size;	
 			clGetDeviceInfo(my_devices[j],			//device
@@ -248,7 +259,7 @@ int main(int argc, char** argv)
 					&my_local_mem_size,	     	//param_value
 					NULL);	        		//param_value_size_ret
 
-			printf("\t\t\tlocal memory size:\t%lld KiBs\n",(my_local_mem_size>>10));
+			printf("\t\t\tlocal memory size:\t%lu KiBs\n",(my_local_mem_size>>10));
 
 		}
 		printf("\n");

@@ -7,7 +7,7 @@ ifeq ($(UNAME_S),Darwin)
 	#CCLIBS += -L/usr/local/lib -lOpenCL #
 else
 	CCLIBS += -lOpenCL -lm -ldl
-	CFLAGS += -std=gnu99
+	CFLAGS += -std=gnu99 -Wall
 endif
 
 SOURCE_C_FILES = main.c
